@@ -20,6 +20,7 @@ public class DressColor extends JFrame implements ActionListener{
 	JLabel picture;
 	String name;
 	String color;
+	double wg =0, bb =0, sum =0;
 	
 	public static void main(String[]args) throws MalformedURLException{
 		DressColor a = new DressColor();
@@ -36,7 +37,7 @@ public class DressColor extends JFrame implements ActionListener{
 		panel = new JPanel();
 		label1 = new JLabel("your name");
 		field1 = new JTextField(10);
-		label2 = new JLabel("'white/gold' or 'black/blue'");
+		label2 = new JLabel("'white/gold' or 'blue/black'");
 		field2 = new JTextField(10);
 		button1 = new JButton("Enter");
 		finishButton = new JButton("Finish");
@@ -52,6 +53,7 @@ public class DressColor extends JFrame implements ActionListener{
 		panel.add(finishButton);
 		JOptionPane.showMessageDialog(null, "Enter your name in the first box and the color combonation in the second box.  Then hit the enter button. Repeate this process for everyone you want to survey and then hit finish.");
 		button1.addActionListener(this);
+		finishButton.addActionListener(this);
 		pack();
 	}
 	
@@ -62,16 +64,43 @@ public class DressColor extends JFrame implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		name = field1.getText();
-		color = field2.getText();
-		System.out.println(color + name);
-		field1.setText("");
-		field2.setText("");
+		if(e.getSource()==button1){
+			name = field1.getText();
+			color = field2.getText();
+			addDataToHash(name, color);
+			//System.out.println(color + name);
+			field1.setText("");
+			field2.setText("");
+		}
+		if(e.getSource()==finishButton){
+			percents();
+		}
 	}
 	
 	public void addDataToHash(String n, String c){
 		name = n;
 		color = c;
+		colors.put(name, color);
+	}
+	public void percents(){
+		for (Object value : colors.values()) {
+			if(value.equals("white/gold")){
+				wg++;
+				
+			}
+			if(value.equals("blue/black")){
+				bb++;
+			}
+		}
+		sum = bb+wg;
+		//System.out.println(sum);
+		
+		double bbpercent = (bb/sum)*100;
+		//System.out.println((bb/sum)*100);
+		double wgpercent = (wg/sum)*100;
+		//System.out.println(wgpercent);
+		
+		JOptionPane.showMessageDialog(null, wgpercent +"% of people see the dress as white/gold and "+ bbpercent + "% of people see the dress as blue/black.");
 	}
 
 
