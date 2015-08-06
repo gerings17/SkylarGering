@@ -13,7 +13,6 @@ public class DatingPool {
 	}
 	
 	public void howManyDates(){
-		//System.out.println("hi");
 		for(Entry<String, String> dates: eligibleBachelors.entrySet()){
 			if(dates.getValue().equals("liberal")){
 				message += (dates.getKey()) + " ";
